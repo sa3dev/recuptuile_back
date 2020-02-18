@@ -17,7 +17,7 @@ async function bootstrap() {
       user: process.env.DB_USER
     });
 
-    // await database.schemaMigration();
+    await database.schemaMigration();
 
     const app: Express = await createApplication({ database: database });
     const server = http.createServer(app);

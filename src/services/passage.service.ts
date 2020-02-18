@@ -13,7 +13,16 @@ export default class PassageService {
             const connection = await this.database.getConnection();
             const tableData = await connection(this.TABLE_NAME);
             return tableData.map(item => new PassageModel(item).toJSON());
-           
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getPassageById(id: number) {
+        try {
+            const connection = await this.database.getConnection();
+            const tableData = await connection(this.TABLE_NAME);
+            return tableData.find(element => element.id === id );
         } catch (error) {
             throw error;
         }

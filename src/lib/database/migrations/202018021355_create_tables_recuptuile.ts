@@ -13,9 +13,9 @@ export function up(k: Knex) {
       return k.schema.createTable(TABLE_NAME, t => {
         t.increments("id").primary();
         t.text("adress_id").notNullable();
-        t.integer("superficies").notNullable();
-        t.text("dateofpassage").notNullable();
-        t.boolean("isDatePassed").notNullable();
+        t.integer("superficies").nullable();
+        t.text("dateofpassage").nullable();
+        t.boolean("isDatePassed").notNullable().defaultTo(false);
       })
       .then( (el) => {
           // TABLE ADRESSE
@@ -23,9 +23,9 @@ export function up(k: Knex) {
               if (!exists) {
                   return k.schema.createTable(TABLE_NAME2 , t => {
                       t.increments('id').primary();
-                      t.text('adress').notNullable();
-                      t.integer('gmap_x').notNullable();
-                      t.integer('gmap_y').notNullable();
+                      t.text('adress').nullable();
+                      t.decimal("gmap_x").nullable();
+                      t.decimal("gmap_y").nullable();
 
                       t.foreign('adress_id').references('passage.adress_id')
                   })
@@ -41,8 +41,8 @@ export function up(k: Knex) {
                         t.string("full_name").notNullable();
                         t.string('email').notNullable();
                         t.unique(['email']);
-                        t.string('type').notNullable();
-                        t.string('phonenumber').notNullable();
+                        t.string('type').nullable();
+                        t.string('phonenumber').nullable();
 
                         // contraintes clef etrangere
                         t.foreign('id').references('passage.id');

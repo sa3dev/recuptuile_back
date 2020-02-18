@@ -6,13 +6,10 @@ import helmet from "helmet";
 import compression from "compression";
 import Database from "./lib/database";
 
-// import resultsRouter from "./server/results";
-// import questionsRouter from "./server/questions";
-// import sinistresRouter from "./server/sinistres";
+// nos routes avec appel au bon controller
 import passageRouter from './server/passage';
 
-// import { ResultsService } from "./services/results.service";
-// import { QuestionsService } from "./services/questions.service";
+// import des bon services pour l'injection au controller
 import PassageService from './services/passage.service';
 
 export default function createContainer(database: Database) {
@@ -25,19 +22,13 @@ export default function createContainer(database: Database) {
   app.use(compression());
   app.use(express.json());
 
-  // Services
+  // Services avec appelle a la database
   const passageService = new PassageService(database);
-//   const questionsService = new QuestionsService(database);
-//   const historyService = new HistoryService(database);
 
   // Routing
-//   const historyMiddleware = historyRouter(historyService);
-//   const answersMiddleware = answersRouter(answersService);
   const passageMiddleware = passageRouter(passageService);
   const apiRouter = Router();
   apiRouter.use("/passage", passageMiddleware);
-//   apiRouter.use("/questions", questionsMiddleware);
-//   apiRouter.use("/history", historyMiddleware);
 
   app.use("/api", apiRouter);
   app.use("/public", express.static(path.resolve(__dirname, "..", "static")));
