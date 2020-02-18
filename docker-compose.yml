@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  mysql:
+    image: mariadb:10.4
+    container_name: recuptuile_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+  node:
+    depends_on:
+      - mysql
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DB_DRIVER: mysql
+      DB_HOST: ${DB_HOST}
+      DB_PORT: 3306
+    image: node:12-alpine
+    container_name: recuptuile_node
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: npm run start:dev
+    ports:
+      - 4000:3000
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: recuptuile_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 8080:80
+    volumes:
+      - /sessions
