@@ -8,9 +8,12 @@ import Database from "./lib/database";
 
 // nos routes avec appel au bon controller
 import passageRouter from './server/passage';
+import adressRouter from './server/adress';
 
 // import des bon services pour l'injection au controller
 import PassageService from './services/passage.service';
+import AdressService from './services/adress.service';
+
 
 export default function createContainer(database: Database) {
   // Middlewares
@@ -24,11 +27,16 @@ export default function createContainer(database: Database) {
 
   // Services avec appelle a la database
   const passageService = new PassageService(database);
+  const adressService = new AdressService(database);
 
   // Routing
   const passageMiddleware = passageRouter(passageService);
+  const adressMiddleWAre = adressRouter(adressService);
+
+  
   const apiRouter = Router();
   apiRouter.use("/passage", passageMiddleware);
+  apiRouter.use('/adress' , adressMiddleWAre);
 
   app.use("/api", apiRouter);
   app.use("/public", express.static(path.resolve(__dirname, "..", "static")));
