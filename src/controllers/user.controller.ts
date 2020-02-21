@@ -24,12 +24,11 @@ export class UserController {
       const password = req.body.password;
 
       if ( await bcryptHasher.verifyPassword(password, user.userpassword)) {
-        console.log('ON THE AUTHENTICATION CONTROLLER ');             
         return this.authService.authenticate(user); 
       }
+
       throw ("Wrong credentials");
-    } catch (error) {
-      console.log("Wrong credentials");   
+    } catch (error) { 
       next(error);
     }
   }

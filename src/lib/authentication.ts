@@ -41,12 +41,14 @@ export class JWTAuthenticator implements Authenticator {
     }
 
     public authenticate(user: any): string {
+        console.log(user);
+        
         const token = jwt.sign(
           { id: user.id, email: user.email, role: user.type },
           this.secret,
           { expiresIn: 60 * 60 }
         );
-        // console.log(token);
+        console.log(token);
         return token
     }
 }
