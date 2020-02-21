@@ -8,10 +8,7 @@ export default class AdressModel {
 
 
   constructor(params) {
-    // .key renvoi un tableau
     Object.keys(params).forEach((k: string) => {
-      // pour chaque valeur de params
-      // on la passera au proprieté de cette classe
       this[k] = params[k];
     });
   }
