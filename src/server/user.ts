@@ -17,7 +17,11 @@ export default function(service: UsersService , authService: JWTAuthenticator) {
 
 
     router.post('/login',
-    validationMiddleware("body", Joi.object().keys({ email: Joi.string().required() , password: Joi.string().required()})),
+    validationMiddleware("body", 
+    Joi.object().keys({ 
+        email: Joi.string().required() , 
+        password: Joi.string().required()
+    })),
     controller.login.bind(controller)
     );
 

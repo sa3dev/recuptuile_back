@@ -21,13 +21,17 @@ export class UserController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await this.service.findbyEmail(req.body.email);
-      const password = req.body.password;
 
+      const password = req.body.password;
+      
       if ( await bcryptHasher.verifyPassword(password, user.userpassword)) {
-        return this.authService.authenticate(user); 
+        const userToken = await this.authService.authenticate(user);
+        res.status(200);
+        res.json(userToken);
+      } else {
+        throw ("Wrong credentials");
       }
 
-      throw ("Wrong credentials");
     } catch (error) { 
       next(error);
     }
