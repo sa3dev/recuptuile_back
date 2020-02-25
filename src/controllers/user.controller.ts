@@ -45,19 +45,27 @@ export class UserController {
       }
 
       const result = await this.service.insert(body);
-      res.sendStatus(204);
+
+      if (result) {
+        const userToken = await this.authService.authenticate(result);
+        console.log(userToken);
+        res.json(userToken);
+      }
     } catch (error) {
       next(error);
     }
   }
 
-  async getById(req: Request, res: Response, next: NextFunction) {
+  async getUserInfo(req: Request, res: Response, next: NextFunction) {
     try {
-      const id = Number(req.params.id);
-      console.log('API NOT FOUND');
       
-      // const result = await this.service.getUserById(id);
-      // res.json(result);
+      const token = req.headers.authorization;
+
+      if (token) {
+        const decodeUser = await this.authService.onUserInfo(token);
+        res.json(decodeUser);
+      }
+      
     } catch (error) {
       next(error);
     }

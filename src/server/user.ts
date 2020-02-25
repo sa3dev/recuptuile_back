@@ -30,5 +30,9 @@ export default function(service: UsersService , authService: JWTAuthenticator) {
     controller.createUser.bind(controller)
     )
 
+    router.get('/me',
+    controller.getUserInfo.bind(controller)
+    )
+
     return router;
 }

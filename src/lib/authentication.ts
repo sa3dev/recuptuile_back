@@ -40,6 +40,30 @@ export class JWTAuthenticator implements Authenticator {
         }
     }
 
+    public async onUserInfo(token: string) {
+        try {
+            if (token &&  token.length > 0 ) {
+                const decode = jwt.verify( token , this.secret);
+                const user = await this.userService.findbyEmail(decode.email);
+
+                console.log('//////////////')
+                console.log(user);
+                console.log('//////////////')
+                
+
+                return {
+                    id: user.id,
+                    full_name: user.full_name,
+                    email: user.email,
+                    role: user.type,
+                    phonenumber: user.phonenumer
+                }
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+
     public authenticate(user: any): string {
         console.log(user);
         

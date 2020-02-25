@@ -48,7 +48,6 @@ export default class UsersService {
         });
 
         user.id = result[0];
-
         return user;
         } catch (err) {
             throw (`Email  already exists` + err);
