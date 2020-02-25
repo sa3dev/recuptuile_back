@@ -77,10 +77,10 @@ export default class UsersService {
         await conn
         .table(this.TABLE_NAME)
         .update({
-            password: newPassword,
-            updated: new Date()
+            userpassword: newPassword,
         })
         .where("email", email);
+        
     }
 
     public async deleteById(userId: number): Promise<void> {

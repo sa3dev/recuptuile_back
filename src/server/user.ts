@@ -34,5 +34,9 @@ export default function(service: UsersService , authService: JWTAuthenticator) {
     controller.getUserInfo.bind(controller)
     )
 
+    router.post('/changepassword' , 
+    controller.updatePassword.bind(controller)
+    )
+
     return router;
 }

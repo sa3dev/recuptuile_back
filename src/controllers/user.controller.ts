@@ -91,4 +91,20 @@ export class UserController {
       next(err);
     }
   }
+
+  async updatePassword( req: Request , res: Response , next: NextFunction) {
+    const body = req.body;
+    try {
+      if(body) {
+        const passCrypt = await bcryptHasher.hashPassword(body.newpassword);
+        const changepass = await this.service.changePassword(body.email, passCrypt)
+        res.sendStatus(204);
+      }
+      throw("email or password not valid")
+    } catch (error) {
+      throw error
+    }
+
+  }
+
 }
