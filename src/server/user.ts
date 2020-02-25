@@ -38,5 +38,20 @@ export default function(service: UsersService , authService: JWTAuthenticator) {
     controller.updatePassword.bind(controller)
     )
 
+    router.post('/forgottenPassword',
+    validationMiddleware('body' ,
+    Joi.object().keys({
+        emailForgottenpassword: Joi.string().required()
+    })),
+    controller.onPasswordForgotten.bind(controller))
+
+    router.post('/reset-password-forgotten' ,
+    // validationMiddleware('body' ,
+    // Joi.object().keys({
+    //     password: Joi.string().required()
+    // })),
+    controller.createNewResetPassword.bind(controller) 
+    )
+
     return router;
 }

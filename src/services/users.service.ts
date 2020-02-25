@@ -68,10 +68,7 @@ export default class UsersService {
 
     }
 
-    public async changePassword(
-        email: string,
-        newPassword: string
-    ): Promise<void> {
+    public async changePassword( email: string, newPassword: string ): Promise<void> {
         const conn = await this.database.getConnection();
 
         await conn
@@ -80,6 +77,7 @@ export default class UsersService {
             userpassword: newPassword,
         })
         .where("email", email);
+        
         
     }
 

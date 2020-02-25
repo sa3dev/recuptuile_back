@@ -44,12 +44,7 @@ export class JWTAuthenticator implements Authenticator {
         try {
             if (token &&  token.length > 0 ) {
                 const decode = jwt.verify( token , this.secret);
-                const user = await this.userService.findbyEmail(decode.email);
-
-                // console.log('//////////////')
-                // console.log(user);
-                // console.log('//////////////')
-                
+                const user = await this.userService.findbyEmail(decode.email);             
 
                 return {
                     id: user.id,

@@ -2,6 +2,8 @@ import UsersService from "../services/users.service";
 import { NextFunction, Request, Response } from "express";
 import { JWTAuthenticator } from '../lib/authentication';
 import bcryptHasher from "../lib/hasher";
+import { MailService } from '../lib/nodemail';
+import * as jwt from 'jsonwebtoken';
 
 export class UserController {
   constructor(
@@ -104,7 +106,55 @@ export class UserController {
     } catch (error) {
       throw error
     }
-
   }
 
+  /**
+   * 
+   * Envoi de mail pour oublie de mot de passe 
+   */
+  async onPasswordForgotten(req: Request , res: Response , next: NextFunction) {
+    try {
+      const email = req.body.emailForgottenpassword;
+
+      const userToken = await jwt.sign(
+        { email: email },
+        process.env.SECRET_KEY,
+        { expiresIn: 60 * 60 }
+      );
+      
+      const testMail = await MailService.resetPassword(
+        email,
+        userToken,
+      );
+    
+      res.json(testMail);
+
+    } catch (error) {
+      console.log(error); 
+    }
+  }
+
+  /**
+   * Create new password for forgotten password
+   */
+  async createNewResetPassword(req: Request , res: Response , next: NextFunction) {
+    try {
+      const token = req.headers.authorization;
+      const newpassword = await bcryptHasher.hashPassword(req.body.password)
+
+      if (token) {
+        const user = await this.authService.onUserInfo(token);
+        console.log(user);
+        const updatePass = await this.service.changePassword(
+          user.email,
+          newpassword
+        );
+
+        const userToken = await this.authService.authenticate(user);
+        res.json(userToken);       
+      }
+    } catch (error) {
+      
+    }
+  }
 }
