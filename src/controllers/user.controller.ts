@@ -50,7 +50,6 @@ export class UserController {
 
       if (result) {
         const userToken = await this.authService.authenticate(result);
-        console.log(userToken);
         res.json(userToken);
       }
     } catch (error) {
@@ -69,6 +68,9 @@ export class UserController {
       }
       
     } catch (error) {
+      console.log("///////////////////////////");
+      console.log(error);
+      console.log("///////////////////////////");
       next(error);
     }
   }
@@ -144,17 +146,18 @@ export class UserController {
 
       if (token) {
         const user = await this.authService.onUserInfo(token);
-        console.log(user);
+        
         const updatePass = await this.service.changePassword(
-          user.email,
+          user .email,
           newpassword
         );
 
         const userToken = await this.authService.authenticate(user);
+
         res.json(userToken);       
       }
     } catch (error) {
-      
+      next(error)
     }
   }
 }

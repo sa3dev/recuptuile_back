@@ -44,7 +44,16 @@ export class JWTAuthenticator implements Authenticator {
         try {
             if (token &&  token.length > 0 ) {
                 const decode = jwt.verify( token , this.secret);
+                console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+                console.log(decode);               
+                console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+
+
                 const user = await this.userService.findbyEmail(decode.email);             
+
+                console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                console.log(user);
+                console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 
                 return {
                     id: user.id,
@@ -60,14 +69,17 @@ export class JWTAuthenticator implements Authenticator {
     }
 
     public authenticate(user: any): string {
-        console.log(user);
         
         const token = jwt.sign(
           { id: user.id, email: user.email, role: user.type },
           this.secret,
           { expiresIn: 60 * 60 }
         );
-        console.log(token);
+        
+        // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        // console.log(token);     
+        // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
         return token
     }
 }
