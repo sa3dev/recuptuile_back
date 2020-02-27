@@ -11,11 +11,15 @@ export default class PassageService {
     /**
      * GET ALL PASSAGE
      */
-    async getAllPassage() {
+    async getAllPassageByID(id: number) {
         try {
             const connection = await this.database.getConnection();
             const tableData = await connection(this.TABLE_NAME);
-            return tableData.map(item => new PassageModel(item).toJSON());
+            
+            const rows = tableData.filter(item => item.user_id === id)
+
+            return this.transform(rows);
+
         } catch (error) {
             throw error;
         }
@@ -68,5 +72,13 @@ export default class PassageService {
         } catch (error) {
             throw error;
         }
+    }
+
+
+    private transform(row) {
+        row.forEach(element => {
+            element.isDatePassed === 1 ? element.isDatePassed = true : element.isDatePassed = false
+        });
+        return row
     }
 }

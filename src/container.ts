@@ -35,7 +35,7 @@ export default function createContainer(database: Database) {
   const authService = new JWTAuthenticator(userService);
 
   // Routing
-  const passageMiddleware = passageRouter(passageService);
+  const passageMiddleware = passageRouter(passageService) ;
   const adressMiddleWAre = adressRouter(adressService);
   const usersMiddleware = userRouter(userService, authService);
 

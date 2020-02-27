@@ -4,17 +4,21 @@ import { PassageController } from '../controllers/passage.controller';
 import validationMiddleware from '../lib/validatation-middleware';
 import Joi from 'joi';
 import { validations } from '../models/passage.model';
+import { authorizationToken } from '../lib/authorization';
+
 
 
 export default function (service: PassageService) {
     const router = Router();
     const controller = new PassageController(service);
 
-
     /**
-     * GET ALL
+     * GET ALL passage by user
      */
-    router.get('/' , controller.getAll.bind(controller));
+    router.get("/",
+    authorizationToken(),
+    controller.getAll.bind(controller)
+    );
 
     /**
      * Create Passage

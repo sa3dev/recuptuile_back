@@ -6,12 +6,22 @@ import { NextFunction, Request, Response } from 'express';
 export class PassageController {
     private TABLE_NAME = config.tables.passage
 
-    constructor(private service: PassageService) {}
+    constructor(private service: PassageService ) {}
 
     async getAll( req: Request , res: Response ,  next: NextFunction ) {
         try {
-            const results = await this.service.getAllPassage();
-            res.json(results);
+
+            const userTokenDecode = req.body.tokenDecoded;
+            
+            if(userTokenDecode) {
+                const results = await this.service.getAllPassageByID(userTokenDecode.id);
+                console.log(results);
+                res.json(results);
+            } else {
+                res.sendStatus(404);
+            } 
+            
+
         } catch (error) {
             next(error);
         }
