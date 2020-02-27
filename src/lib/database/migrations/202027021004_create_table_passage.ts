@@ -9,6 +9,7 @@ export function up(k: Knex) {
             return k.schema.createTable(TABLE_NAME, t => {
                 t.increments("id").primary();
                 t.integer("adress_id").unsigned().notNullable();
+                t.integer("user_id").unsigned().notNullable();
                 t.integer("superficies").nullable();
                 t.string("dateofpassage").nullable();
                 t.boolean("isDatePassed").notNullable().defaultTo(false);
@@ -19,6 +20,7 @@ export function up(k: Knex) {
         k.schema.hasTable(TABLE_NAME).then(exist => {
             return k.schema.table(TABLE_NAME, t => {
                 t.foreign("adress_id").references("id").inTable("adress");
+                t.foreign("user_id").references("id").inTable("users");
             });
         });
     });
