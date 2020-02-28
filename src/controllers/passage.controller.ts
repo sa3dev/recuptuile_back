@@ -17,9 +17,10 @@ export class PassageController {
                 const results = await this.service.getAllPassageByID(userTokenDecode.id);
                 console.log(results);
                 res.json(results);
-            } else {
-                res.sendStatus(404);
             } 
+            // else {
+            //     res.sendStatus(404);
+            // } 
             
 
         } catch (error) {
@@ -29,9 +30,22 @@ export class PassageController {
 
     async createPassage( req: Request , res: Response ,  next: NextFunction ) {
         try {
-            const body = req.body;
-            const result = await this.service.createPassage(body);
-            res.status(200);
+
+            const obj = {
+                adress: req.body.adress ,
+                superficies: req.body.superficies,
+                dateofpassage: req.body.dateofpassage,
+                user_id: req.body.tokenDecoded.id
+            }
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+            console.log(obj);
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+            
+            const test = await this.service.createPassage(obj);
+            
+            console.log(test);
+
+            res.sendStatus(200);
         } catch (error) {
           next(error);
         }

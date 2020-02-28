@@ -43,7 +43,7 @@ export default class PassageService {
      * 
      * @param data Create new passage
      */
-    async createPassage( data ) {        
+    async createPassage( data ) {
         try {
             const connection = await this.database.getConnection();
             return await connection(this.TABLE_NAME).insert(data);

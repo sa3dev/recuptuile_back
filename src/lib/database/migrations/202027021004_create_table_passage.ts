@@ -8,11 +8,12 @@ export function up(k: Knex) {
         if (!exists) {
             return k.schema.createTable(TABLE_NAME, t => {
                 t.increments("id").primary();
-                t.integer("adress_id").unsigned().notNullable();
+                // t.integer("adress_id").unsigned().notNullable();
                 t.integer("user_id").unsigned().notNullable();
+                t.string("adress").nullable();
                 t.integer("superficies").nullable();
                 t.string("dateofpassage").nullable();
-                t.boolean("isDatePassed").notNullable().defaultTo(false);
+                // t.boolean("isDatePassed").notNullable().defaultTo(false);
             });
         }
     })

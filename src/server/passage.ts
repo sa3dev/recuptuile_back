@@ -24,7 +24,8 @@ export default function (service: PassageService) {
      * Create Passage
      */
     router.post("/", [
-        validationMiddleware("body", validations.create),
+        // validationMiddleware("body", validations.create),
+        authorizationToken(),
         controller.createPassage.bind(controller)
     ]);
     /**

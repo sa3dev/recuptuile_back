@@ -24,15 +24,13 @@ export class PassageModel {
 
 export const validations = {
     create: Joi.object().keys({
-        adress_id: Joi.number().required(),
+        adress: Joi.string().required(),
         superficies: Joi.number().required(),
         dateofpassage: Joi.string().required(),
-        isDatePassed: Joi.boolean(),
     }),
     update: Joi.object().keys({
         adress_id: Joi.number(),
         superficies: Joi.number(),
         dateofpassage: Joi.string(),
-        isDatePassed: Joi.boolean()
     })
 };

@@ -21,8 +21,8 @@ export default class AdressModel {
 export const validations = {
   create: Joi.object().keys({
     adress: Joi.string().required(),
-    gmap_x: Joi.number().required(),
-    gmap_y: Joi.number().required(),
+    // gmap_x: Joi.number().required(),
+    // gmap_y: Joi.number().required(),
   }),
   update: Joi.object().keys({
     adress: Joi.string(),

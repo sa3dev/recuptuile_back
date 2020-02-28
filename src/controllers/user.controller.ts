@@ -61,9 +61,17 @@ export class UserController {
     try {
       
       const token = req.headers.authorization;
-
+      
+      console.log("///////////////////////////");
+      console.log(token);
+      console.log("///////////////////////////");
+      
       if (token) {
         const decodeUser = await this.authService.onUserInfo(token);
+
+        console.log("///////////////////////////");
+        console.log(decodeUser);
+        console.log("///////////////////////////");
         res.json(decodeUser);
       }
       
