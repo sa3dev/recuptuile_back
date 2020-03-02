@@ -18,8 +18,9 @@ export function authorizationRole(role: string) {
     const tokenDecoded = jwt.decode(token);
 
     if (role === tokenDecoded.role) {
-      next()
+      await next()
+    } else {
+      res.status(403);
     }
-    res.sendStatus(403);
   }
 }

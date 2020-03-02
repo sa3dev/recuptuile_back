@@ -31,11 +31,9 @@ export class LivraisonController {
 
     async getLivraisonById(req: Request, res: Response, next: NextFunction) {
         try {
-            const usertoken = req.body.tokenDecoded
-            console.log(req.body);
-            
-
-            if (usertoken){
+            const usertoken = req.body.tokenDecoded            
+            const paramId = req.params.id
+            if (usertoken && paramId){
                 const result = await this.service.getAllLivraisonById(usertoken.id);
                 res.json(result);
             }

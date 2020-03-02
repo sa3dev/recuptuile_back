@@ -26,19 +26,28 @@ export default class LivraisonService {
             const connection = await this.database.getConnection();
             const rows = await connection(this.TABLE_NAME)
                 .innerJoin(this.TABLE_NAME_PASSAGE, 'passage.id', '=', 'livraison.passage_id')
-            .where( 'livraison.user_id' , id)
+                .where( 'livraison.user_id' , id)
 
-            return rows;
+            console.log(this.transform(rows));
 
-            // SELECT * FROM `livraison` 
-            // INNER JOIN passage on passage.id = livraison.passage_id 
-            // where livraison.user_id = 2
-
-
+            return await this.transform(rows);
 
         } catch (error) {
             throw error;
         }
+    }
+
+    private transform(rows) {
+        const tab = [];
+        rows.forEach(element => {
+            tab.push({
+                id: element.id,
+                adress: element.adress,
+                superficies: element.superficies,
+                dateofpassage: element.dateofpassage
+            })
+        });
+        return tab;
     }
 
 }
