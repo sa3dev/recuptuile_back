@@ -18,7 +18,7 @@ export default class PassageService {
             
             const rows = tableData.filter(item => item.user_id === id)
 
-            return this.transform(rows);
+            return (rows);
 
         } catch (error) {
             throw error;

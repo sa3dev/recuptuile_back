@@ -10,40 +10,45 @@ export function up(k: Knex) {
         return k.schema.createTable(TABLE_NAME, t => {
             t.increments("id").primary();
             t.string("full_name").notNullable();
-            t.string('email').notNullable(); t.unique(['email']);
+            t.string('email').notNullable(); 
+            t.unique(['email']);
             t.string("userpassword").notNullable();
-            t.string('type').nullable();
+            t.string('type').nullable();  // user / admin / livreur
             t.string('phonenumber').nullable();
+            t.string("adress").nullable();
+            t.decimal("gmap_x" , null ,).nullable();
+            t.decimal("gmap_y").nullable();
         })
     }
-  }).then( (exist)=> {
-      return k.schema.table(TABLE_NAME , t =>{
-        return function(knex) {
-          // Deletes ALL existing entries
-          return knex('users').del().then(function () {
-              // Inserts seed entries
-              return knex('users').insert([
-                {
-                  id: 1,
-                  full_name: "test-test",
-                  email: "test@gmail.com",
-                  userpassword: "$2a$10$mjYKJHLyVHH3bMoAag/so.wYXg8ZIdPzWA.zvnxDKPc5lbo8z7pLe",
-                  type: "user",
-                  phonenumber: "0123456789"
-                }, 
-                {
-                  id: 2,
-                  full_name: "admin-admin",
-                  email: "admin@gmail.com",
-                  userpassword: "$2a$10$mjYKJHLyVHH3bMoAag/so.wYXg8ZIdPzWA.zvnxDKPc5lbo8z7pLe",
-                  type: "admin",
-                  phonenumber: "0123456789"
-                }
-              ]);
-            });
-        }
-      })
   })
+  // .then( (exist)=> {
+  //     return k.schema.table(TABLE_NAME , t =>{
+  //       return function(knex) {
+  //         // Deletes ALL existing entries
+  //         return knex('users').del().then(function () {
+  //             // Inserts seed entries
+  //             return knex('users').insert([
+  //               {
+  //                 id: 1,
+  //                 full_name: "test-test",
+  //                 email: "test@gmail.com",
+  //                 userpassword: "$2a$10$mjYKJHLyVHH3bMoAag/so.wYXg8ZIdPzWA.zvnxDKPc5lbo8z7pLe",
+  //                 type: "user",
+  //                 phonenumber: "0123456789"
+  //               }, 
+  //               {
+  //                 id: 2,
+  //                 full_name: "admin-admin",
+  //                 email: "admin@gmail.com",
+  //                 userpassword: "$2a$10$mjYKJHLyVHH3bMoAag/so.wYXg8ZIdPzWA.zvnxDKPc5lbo8z7pLe",
+  //                 type: "admin",
+  //                 phonenumber: "0123456789"
+  //               }
+  //             ]);
+  //           });
+  //       }
+  //     })
+  // })
 }
 
 export function down(k: Knex) {

@@ -30,7 +30,7 @@ export class PassageController {
 
     async createPassage( req: Request , res: Response ,  next: NextFunction ) {
         try {
-
+            
             const obj = {
                 adress: req.body.adress ,
                 superficies: req.body.superficies,
@@ -45,8 +45,10 @@ export class PassageController {
             
             console.log(test);
 
-            res.sendStatus(200);
+            res.sendStatus(204); // une réponse 204 est sans body / une 200 attend un body est parse la réponse ( sa fait peter au niveau du parse )
+
         } catch (error) {
+            console.log(error);
           next(error);
         }
     }
