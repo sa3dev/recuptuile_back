@@ -1,6 +1,7 @@
 export default {
     tables: {
         passage: 'passage',
-        users: 'users'
+        users: 'users',
+        livraison: 'livraison'
     }
 }

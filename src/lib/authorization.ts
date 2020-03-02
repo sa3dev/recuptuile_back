@@ -5,10 +5,21 @@ export function authorizationToken() {
   return async (req: Request, res: Response, next: NextFunction) => {
 
     const token = req.headers.authorization;
-
     req.body.tokenDecoded = jwt.decode(token);
    
-    
-    await next();
+    next();
   };
+}
+
+export function authorizationRole(role: string) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+
+    const token = req.headers.authorization;
+    const tokenDecoded = jwt.decode(token);
+
+    if (role === tokenDecoded.role) {
+      next()
+    }
+    res.sendStatus(403);
+  }
 }
