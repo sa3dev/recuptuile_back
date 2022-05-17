@@ -9,7 +9,9 @@ const bcryptHasher =  { 
     async verifyPassword( userPass,  hash) { 
         return new Promise((resolve, error) => {
             bcrypt.compare(userPass, hash, (err, success) => {
-                if (err) { return error(err) }
+                if (err) { 
+                    return error(err) 
+                }
                 resolve(success)
             })
         })
